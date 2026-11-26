@@ -1,7 +1,9 @@
-// DompetKeluarga — entrypoint penyerahan.
+// DompetKeluarga — entrypoint penyerahan (v2: identitas visual + shot Tren/Tagihan/Tabungan).
 // Menyalin app/ + screenshots/ ke output lalu menulis /output/dossier.json
 // via buildDossier dari ./vendor/makefun-frontend.ts (salinan kit, tak diubah).
 // Stdlib Node 22 saja. Deterministik: dua run menulis byte yang sama.
+// v2: set screenshot = dashboard (hero) + anggaran + tren + phone-tabungan;
+// angka tetap dari data v1 yang sama (pemasukan 23,1 jt, keluar 10,353 jt).
 // PENTING: jangan pernah rm() direktori output itu sendiri — grader jalan
 // sebagai user 65534 dan tidak bisa menghapus dir yang parent-nya milik
 // harness (EACCES). mkdir + sapu ISI-nya saja.
@@ -26,10 +28,11 @@ function main(): void {
   const shotsSrc = join(repoRoot, 'screenshots');
   if (!existsSync(appSrc)) throw new Error('main.ts: app/ tidak ditemukan di ' + repoRoot);
   // Gate lokal: screenshots/ harus berisi 3–4 gambar, kalau tidak dossier gagal di gate.
+  // v2: setnya dashboard + anggaran + tren + phone-tabungan, urutan itu yang jadi cover.
   if (existsSync(shotsSrc)) {
     const shots = readdirSync(shotsSrc).filter((f) => /\.(png|jpe?g)$/i.test(f));
     if (shots.length < 3 || shots.length > 4) {
-      throw new Error('main.ts: screenshots/ berisi ' + shots.length + ' gambar, harus 3–4');
+      throw new Error('main.ts v2: screenshots/ berisi ' + shots.length + ' gambar, harus 3–4 (dashboard, anggaran, tren, phone-tabungan)');
     }
   }
   cpSync(appSrc, join(outDir, 'app'), { recursive: true });

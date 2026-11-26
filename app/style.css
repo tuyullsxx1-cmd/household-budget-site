@@ -1,9 +1,14 @@
 /* DompetKeluarga — gaya situs anggaran keluarga. Satu job: tampilan. */
+/* v2: identitas diperkuat — hijau tua + emas jadi ciri khas: pita hero hijau tua
+   dengan cincin emas, garis emas di bawah header, dan satu warna khas per
+   kategori (lihat data.js WARNA_KATEGORI) di batang, titik, dan tag. */
 :root {
   --hijau: #166b4f;
   --hijau-tua: #0d4d36;
+  --hijau-sedang: #1e6b4a;
   --hijau-muda: #e3f2e9;
   --emas: #c98a1b;
+  --emas-terang: #e8b64c;
   --emas-muda: #fdf3dc;
   --merah: #b3382e;
   --merah-muda: #fbe9e7;
@@ -24,13 +29,22 @@ body {
   line-height: 1.55;
 }
 .wrap { max-width: 1080px; margin: 0 auto; padding: 0 20px; }
-.site-header { background: var(--hijau-tua); color: #fff; }
+.site-header {
+  background: var(--hijau-tua); color: #fff;
+  /* v2: garis emas + anyaman diagonal samar di bawah header — ciri khas situs. */
+  border-bottom: 3px solid var(--emas);
+  background-image: repeating-linear-gradient(45deg, rgba(232,182,76,.05) 0 2px, transparent 2px 14px);
+}
 .header-inner { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 28px; padding-top: 14px; padding-bottom: 14px; }
 .brand { display: flex; align-items: center; gap: 12px; color: #fff; text-decoration: none; }
 .brand-mark {
   display: inline-flex; align-items: center; justify-content: center;
-  width: 46px; height: 46px; border-radius: 12px;
-  background: var(--emas); color: #fff; font-weight: 700; font-size: 18px;
+  width: 46px; height: 46px; border-radius: 50%;
+  /* v2: koin emas — gradasi emas, tulisan Rp hijau tua, cincin emas ganda. */
+  background: radial-gradient(circle at 35% 30%, #f0c463, #c98a1b 70%);
+  color: var(--hijau-tua); font-weight: 700; font-size: 18px;
+  border: 2px solid #f0c463;
+  box-shadow: 0 0 0 2px rgba(232,182,76,.35);
 }
 .brand-text { display: flex; flex-direction: column; line-height: 1.25; }
 .brand-text strong { font-size: 22px; letter-spacing: .2px; }
@@ -46,6 +60,32 @@ main { padding-top: 26px; padding-bottom: 34px; }
 h1 { font-size: 30px; line-height: 1.2; margin: 0 0 6px; }
 h2 { font-size: 21px; margin: 0 0 10px; }
 h3 { font-size: 17px; margin: 0 0 8px; font-family: system-ui, sans-serif; }
+/* v2: label kecil emas di atas judul + titik warna kategori. */
+.eyebrow {
+  font-family: system-ui, sans-serif; font-size: 12px; font-weight: 700;
+  text-transform: uppercase; letter-spacing: .14em; color: var(--emas-terang);
+  margin: 0 0 6px;
+}
+.dot { display: inline-block; width: 10px; height: 10px; border-radius: 50%; margin-right: 6px; vertical-align: 1px; }
+/* v2: pita hero dashboard — hijau tua, cincin emas, mini tren. */
+.hero {
+  display: flex; gap: 28px; align-items: center;
+  background: linear-gradient(135deg, #0d4d36 0%, #125c40 60%, #166b4f 100%);
+  color: #fff; border-radius: 18px; padding: 24px 26px;
+  border-bottom: 3px solid var(--emas);
+}
+.hero h1 { color: #fff; margin-bottom: 8px; }
+.hero-angka { font-size: 18px; margin: 0 0 6px; }
+.hero-angka strong { font-size: 36px; color: var(--emas-terang); letter-spacing: .2px; }
+.hero-angka span { color: #cfe3d8; font-family: system-ui, sans-serif; font-size: 15px; }
+.hero-sub { color: #dcebe1; font-family: system-ui, sans-serif; font-size: 15px; margin: 0 0 14px; max-width: 56ch; }
+.hero-ket { color: #a9c8b6; font-family: system-ui, sans-serif; font-size: 12px; margin: 6px 0 0; }
+.hero-teks { flex: 1 1 auto; min-width: 0; }
+.hero-cincin { flex: 0 0 auto; text-align: center; }
+.hero-cincin p { font-family: system-ui, sans-serif; font-size: 14px; color: #dcebe1; margin: 10px 0 0; max-width: 220px; }
+.hero-cincin a { color: var(--emas-terang); }
+.minitren { width: 100%; max-width: 340px; height: auto; display: block; }
+.cincin { display: block; margin: 0 auto; }
 .lede { color: var(--abu); font-size: 17px; margin: 0 0 22px; max-width: 72ch; }
 .lede strong { color: var(--tinta); }
 .grid { display: grid; gap: 16px; }
@@ -141,6 +181,11 @@ button.bahaya:hover { background: var(--merah-muda); }
   .grid.dua, .grid.tiga { grid-template-columns: 1fr; }
   h1 { font-size: 25px; }
   .kpi-card .nilai { font-size: 24px; }
+  /* v2: hero menumpuk di layar kecil, cincin di bawah teks. */
+  .hero { flex-direction: column; align-items: stretch; gap: 18px; padding: 20px; }
+  .hero-angka strong { font-size: 30px; }
+  .hero-cincin { text-align: left; }
+  .hero-cincin .cincin { margin: 0; }
 }
 @media (max-width: 520px) {
   body { font-size: 16px; }

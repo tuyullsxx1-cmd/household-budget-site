@@ -22,10 +22,15 @@
   function barAnggaran(kategori, terpakai, anggaran) {
     var p = persen(terpakai, anggaran);
     var sisa = anggaran - terpakai;
+    // v2: isi batang memakai warna khas kategori (bukan satu hijau untuk semua),
+    // dan angka persen ikut berwarna saat anggaran hampir habis (>=90% emas,
+    // 100% merah) — sinyalnya tetap kebaca tanpa mengorbankan identitas warna.
+    var warna = D.WARNA_KATEGORI[kategori] || '#166b4f';
+    var warnaPersen = p >= 100 ? '#b3382e' : (p >= 90 ? '#8a5a00' : '#22302a');
     return '<div class="anggaran-item">' +
-      '<div class="nama"><span>' + esc(kategori) + '</span><span>' + D.formatRp(terpakai) + ' dari ' + D.formatRp(anggaran) + '</span></div>' +
-      '<div class="' + kelasBar(p) + '" role="progressbar" aria-valuenow="' + p + '" aria-valuemin="0" aria-valuemax="100" aria-label="Anggaran ' + esc(kategori) + '"><span style="width:' + Math.min(p, 100) + '%"></span></div>' +
-      '<div class="bar-row"><span class="persen">' + p + '% terpakai</span><span>' + (sisa >= 0 ? 'Sisa ' + D.formatRp(sisa) : 'Lewat ' + D.formatRp(-sisa)) + '</span></div>' +
+      '<div class="nama"><span><span class="dot" style="background:' + warna + '"></span>' + esc(kategori) + '</span><span>' + D.formatRp(terpakai) + ' dari ' + D.formatRp(anggaran) + '</span></div>' +
+      '<div class="' + kelasBar(p) + '" role="progressbar" aria-valuenow="' + p + '" aria-valuemin="0" aria-valuemax="100" aria-label="Anggaran ' + esc(kategori) + '"><span style="width:' + Math.min(p, 100) + '%;background:' + warna + '"></span></div>' +
+      '<div class="bar-row"><span class="persen" style="color:' + warnaPersen + '">' + p + '% terpakai</span><span>' + (sisa >= 0 ? 'Sisa ' + D.formatRp(sisa) : 'Lewat ' + D.formatRp(-sisa)) + '</span></div>' +
       '</div>';
   }
 
@@ -40,10 +45,24 @@
     var belum = minggu.filter(function (b) { return !b.dibayar; });
     var belumTotal = 0;
     belum.forEach(function (b) { belumTotal += b.jumlah; });
+    var darurat = data.tabungan[0];
+    var trenMini = data.tren.slice();
+    trenMini[trenMini.length - 1] = { bulan: 'Nov', pemasukan: masuk, pengeluaran: keluar };
     var h = [];
-    h.push('<h1>Dashboard November 2026</h1>');
-    h.push('<p class="lede">Keluarga Santoso — Budi dan Sari, dua anak. Pemasukan bulan ini <strong>' + D.formatRp(masuk) + '</strong>, pengeluaran <strong>' + D.formatRp(keluar) + '</strong>. Semua angka di bawah dihitung dari transaksi yang sama dengan halaman Transaksi dan Anggaran.</p>');
-    h.push('<div class="grid kpi">');
+    // v2: hero band — pita hijau tua dengan cincin dana darurat + mini tren sisa
+    // bulanan, supaya dashboard langsung terbaca sebagai aplikasi anggaran dalam
+    // sekali pandang, bukan tabel polos. Semua angka dari data yang sama.
+    h.push('<section class="hero" aria-label="Ringkasan bulan ini"><div class="hero-teks">' +
+      '<p class="eyebrow">November 2026 &middot; Keluarga Santoso</p>' +
+      '<h1>Dashboard November 2026</h1>' +
+      '<p class="hero-angka">Sisa <strong>' + D.formatRp(sisa) + '</strong> <span>&middot; ' + Math.round(sisa / masuk * 100) + '% pemasukan masih di tangan</span></p>' +
+      '<p class="hero-sub">Pemasukan ' + D.formatRp(masuk) + ', pengeluaran ' + D.formatRp(keluar) + ' — semua angka di bawah dihitung dari transaksi yang sama dengan halaman Transaksi dan Anggaran.</p>' +
+      G.renderMiniTren(trenMini) +
+      '<p class="hero-ket">Sisa tiap bulan, Jun&ndash;Nov 2026 — emas = bulan berjalan.</p>' +
+      '</div><div class="hero-cincin">' + G.renderCincin(darurat.terkumpul, darurat.target, 132) +
+      '<p><strong>Dana darurat</strong><br>' + D.formatRp(darurat.terkumpul) + ' dari ' + D.formatRp(darurat.target) + ' — kurang ' + D.formatRp(darurat.target - darurat.terkumpul) + '.</p>' +
+      '<p><a href="#/tabungan">Lihat semua target &rarr;</a></p></div></section>');
+    h.push('<div class="grid kpi" style="margin-top:16px">');
     h.push('<div class="card kpi-card masukan"><div class="label">Pemasukan</div><div class="nilai">' + D.formatRp(masuk) + '</div><div class="sub">Gaji + jualan online</div></div>');
     h.push('<div class="card kpi-card keluar"><div class="label">Pengeluaran</div><div class="nilai">' + D.formatRp(keluar) + '</div><div class="sub">' + data.transaksi.filter(function (t) { return t.jenis === 'keluar'; }).length + ' transaksi tercatat</div></div>');
     h.push('<div class="card kpi-card sisa"><div class="label">Sisa uang</div><div class="nilai">' + D.formatRp(sisa) + '</div><div class="sub">' + Math.round(sisa / masuk * 100) + '% dari pemasukan tersisa</div></div>');
@@ -52,7 +71,8 @@
     h.push('<div class="grid dua" style="margin-top:16px">');
     h.push('<div class="card"><h2>3 kategori terbesar</h2><ul class="daftar">');
     besar.forEach(function (b) {
-      h.push('<li><span>' + esc(b.kategori) + ' <span style="color:#5d6d65">(' + persen(b.jumlah, data.anggaran[b.kategori]) + '% dari anggaran)</span></span><span class="angka">' + D.formatRp(b.jumlah) + '</span></li>');
+      var warna = D.WARNA_KATEGORI[b.kategori] || '#166b4f';
+      h.push('<li><span><span class="dot" style="background:' + warna + '"></span>' + esc(b.kategori) + ' <span style="color:#5d6d65">(' + persen(b.jumlah, data.anggaran[b.kategori]) + '% dari anggaran)</span></span><span class="angka">' + D.formatRp(b.jumlah) + '</span></li>');
     });
     h.push('</ul><p style="font-family:system-ui,sans-serif;font-size:15px;margin:14px 0 0"><a href="#/anggaran">Lihat semua anggaran &rarr;</a></p></div>');
     h.push('<div class="card"><h2>Tagihan jatuh tempo minggu ini</h2>');
@@ -72,7 +92,8 @@
   }
 
   function barisTransaksi(t) {
-    return '<tr><td>' + D.formatTanggal(t.tanggal) + '</td><td>' + esc(t.deskripsi) + '</td><td><span class="tag">' + esc(t.kategori) + '</span></td>' +
+    var warnaTag = t.kategori === 'Pemasukan' ? '#166b4f' : (D.WARNA_KATEGORI[t.kategori] || '#166b4f');
+    return '<tr><td>' + D.formatTanggal(t.tanggal) + '</td><td>' + esc(t.deskripsi) + '</td><td><span class="tag"><span class="dot" style="background:' + warnaTag + '"></span>' + esc(t.kategori) + '</span></td>' +
       '<td class="angka ' + (t.jenis === 'masuk' ? 'masuk' : 'keluar') + '">' + (t.jenis === 'masuk' ? '+' : '&minus;') + D.formatRp(t.jumlah) + '</td>' +
       '<td class="angka"><button class="ghost kecil" data-edit="' + esc(t.id) + '" type="button">Ubah</button> <button class="bahaya kecil" data-hapus="' + esc(t.id) + '" type="button">Hapus</button></td></tr>';
   }

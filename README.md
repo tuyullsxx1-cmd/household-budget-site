@@ -9,6 +9,17 @@ kompetisi make.fun [best-household-budget-site-20261126-1457](https://make.fun/b
 Semua angka nyata dan konsisten: pemasukan Rp23.100.000, pengeluaran Rp10.353.000,
 sisa Rp12.747.000, dihitung dari transaksi yang sama di setiap halaman.
 
+## Yang baru di v2
+
+- **Identitas visual khas**: pita hero hijau tua di dashboard dengan cincin emas
+  dana darurat (62% dari Rp30.000.000) dan mini tren sisa bulanan; garis emas +
+  anyaman diagonal di bawah header; logo "Rp" jadi koin emas.
+- **Satu warna per kategori** (Belanja emas, Makan terakota, Transport teal,
+  Tagihan ungu, Pendidikan hijau, Hiburan mawar, Kesehatan biru, Lainnya zaitun)
+  — dipakai di batang anggaran, titik daftar, dan tag transaksi.
+- **Screenshot baru**: dashboard hero (cover), anggaran warna-warni, tren 6 bulan,
+  dan tabungan di ukuran ponsel. Angka tetap sama dengan v1 (data yang sama).
+
 ## Isi situs
 
 - **Dashboard** — ringkasan bulan ini (pemasukan, pengeluaran, sisa, sisa anggaran),

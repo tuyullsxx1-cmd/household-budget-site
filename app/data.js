@@ -6,6 +6,14 @@
 
   var KATEGORI = ['Belanja', 'Makan', 'Transport', 'Tagihan', 'Pendidikan', 'Hiburan', 'Kesehatan', 'Lainnya'];
 
+  // v2: satu warna khas per kategori, dipakai di mana-mana — batang anggaran,
+  // titik di daftar teratas, dan tag kategori — supaya tiap kategori langsung
+  // dikenali tanpa baca labelnya. Emas = Belanja (pengeluaran terbesar).
+  var WARNA_KATEGORI = {
+    Belanja: '#c98a1b', Makan: '#c65a3c', Transport: '#2e7d8a', Tagihan: '#7a5c9e',
+    Pendidikan: '#166b4f', Hiburan: '#c24d6d', Kesehatan: '#4a7fb5', Lainnya: '#8a8f7a'
+  };
+
   var ANGGARAN_AWAL = {
     Belanja: 3500000, Makan: 1200000, Transport: 1500000, Tagihan: 2800000,
     Pendidikan: 2000000, Hiburan: 800000, Kesehatan: 1000000, Lainnya: 600000
@@ -147,6 +155,7 @@
 
   window.DompetData = {
     KATEGORI: KATEGORI,
+    WARNA_KATEGORI: WARNA_KATEGORI,
     muat: muat,
     simpan: simpan,
     formatRp: formatRp,
