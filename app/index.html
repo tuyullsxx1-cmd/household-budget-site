@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>DompetKeluarga — Anggaran Keluarga Santoso, November 2026</title>
+<meta name="description" content="DompetKeluarga: anggaran bulanan Keluarga Santoso — pemasukan, pengeluaran, anggaran per kategori, tren, tagihan, dan tabungan. Semua tersimpan di perangkat Anda.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%230d4d36'/%3E%3Ctext x='32' y='42' font-size='26' font-family='Georgia' fill='%23ffffff' text-anchor='middle'%3ERp%3C/text%3E%3C/svg%3E">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header class="site-header">
+  <div class="wrap header-inner">
+    <a class="brand" href="#/">
+      <span class="brand-mark" aria-hidden="true">Rp</span>
+      <span class="brand-text"><strong>DompetKeluarga</strong><small>Keluarga Santoso &middot; November 2026</small></span>
+    </a>
+    <nav class="main-nav" aria-label="Navigasi utama">
+      <a href="#/" data-route="">Dashboard</a>
+      <a href="#/transaksi" data-route="transaksi">Transaksi</a>
+      <a href="#/anggaran" data-route="anggaran">Anggaran</a>
+      <a href="#/tren" data-route="tren">Tren</a>
+      <a href="#/tagihan" data-route="tagihan">Tagihan</a>
+      <a href="#/tabungan" data-route="tabungan">Tabungan</a>
+    </nav>
+  </div>
+</header>
+<main class="wrap" id="app" aria-live="polite"></main>
+<footer class="site-footer">
+  <div class="wrap">
+    <p><strong>DompetKeluarga</strong> — anggaran rumah tangga Keluarga Santoso, November 2026. Semua angka dihitung dari transaksi yang sama di setiap halaman, dan perubahan Anda tersimpan di peramban ini (localStorage). Tidak ada data yang dikirim ke mana pun; situs ini berjalan tanpa internet.</p>
+    <p class="foot-note">Keluarga fiktif untuk contoh. Gaji masuk tanggal 1, tagihan dicatat saat dibayar.</p>
+  </div>
+</footer>
+<script src="data.js"></script>
+<script src="charts.js"></script>
+<script src="views.js"></script>
+<script src="main.js"></script>
+</body>
+</html>

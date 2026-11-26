@@ -1,0 +1,150 @@
+/* DompetKeluarga — gaya situs anggaran keluarga. Satu job: tampilan. */
+:root {
+  --hijau: #166b4f;
+  --hijau-tua: #0d4d36;
+  --hijau-muda: #e3f2e9;
+  --emas: #c98a1b;
+  --emas-muda: #fdf3dc;
+  --merah: #b3382e;
+  --merah-muda: #fbe9e7;
+  --tinta: #22302a;
+  --abu: #5d6d65;
+  --garis: #d9e2db;
+  --latar: #f6f8f5;
+  --kartu: #ffffff;
+  --radius: 14px;
+}
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  background: var(--latar);
+  color: var(--tinta);
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 17px;
+  line-height: 1.55;
+}
+.wrap { max-width: 1080px; margin: 0 auto; padding: 0 20px; }
+.site-header { background: var(--hijau-tua); color: #fff; }
+.header-inner { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 28px; padding-top: 14px; padding-bottom: 14px; }
+.brand { display: flex; align-items: center; gap: 12px; color: #fff; text-decoration: none; }
+.brand-mark {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 46px; height: 46px; border-radius: 12px;
+  background: var(--emas); color: #fff; font-weight: 700; font-size: 18px;
+}
+.brand-text { display: flex; flex-direction: column; line-height: 1.25; }
+.brand-text strong { font-size: 22px; letter-spacing: .2px; }
+.brand-text small { font-size: 13px; color: #cfe3d8; font-family: system-ui, sans-serif; }
+.main-nav { display: flex; flex-wrap: wrap; gap: 4px; margin-left: auto; }
+.main-nav a {
+  color: #dcebe1; text-decoration: none; font-family: system-ui, sans-serif;
+  font-size: 15px; font-weight: 600; padding: 8px 12px; border-radius: 9px;
+}
+.main-nav a:hover { background: rgba(255,255,255,.12); color: #fff; }
+.main-nav a.active { background: #fff; color: var(--hijau-tua); }
+main { padding-top: 26px; padding-bottom: 34px; }
+h1 { font-size: 30px; line-height: 1.2; margin: 0 0 6px; }
+h2 { font-size: 21px; margin: 0 0 10px; }
+h3 { font-size: 17px; margin: 0 0 8px; font-family: system-ui, sans-serif; }
+.lede { color: var(--abu); font-size: 17px; margin: 0 0 22px; max-width: 72ch; }
+.lede strong { color: var(--tinta); }
+.grid { display: grid; gap: 16px; }
+.grid.kpi { grid-template-columns: repeat(4, 1fr); }
+.grid.dua { grid-template-columns: 1.6fr 1fr; }
+.grid.tiga { grid-template-columns: repeat(3, 1fr); }
+.card {
+  background: var(--kartu); border: 1px solid var(--garis);
+  border-radius: var(--radius); padding: 18px 20px;
+}
+.card h2 { font-family: system-ui, sans-serif; }
+.kpi-card .label { font-family: system-ui, sans-serif; font-size: 13px; text-transform: uppercase; letter-spacing: .06em; color: var(--abu); }
+.kpi-card .nilai { font-size: 30px; font-weight: 700; line-height: 1.15; margin: 4px 0; }
+.kpi-card .sub { font-family: system-ui, sans-serif; font-size: 14px; color: var(--abu); }
+.kpi-card.masukan .nilai { color: var(--hijau); }
+.kpi-card.keluar .nilai { color: var(--merah); }
+.kpi-card.sisa .nilai { color: var(--hijau-tua); }
+.kpi-card.anggaran .nilai { color: var(--emas); }
+.bar { height: 12px; background: #e8efe9; border-radius: 999px; overflow: hidden; }
+.bar > span { display: block; height: 100%; background: var(--hijau); border-radius: 999px; }
+.bar.penuh > span { background: var(--emas); }
+.bar.lewat > span { background: var(--merah); }
+.bar-row { display: flex; justify-content: space-between; gap: 10px; font-family: system-ui, sans-serif; font-size: 14px; margin: 2px 0 6px; }
+.bar-row .persen { font-weight: 700; }
+.anggaran-item { padding: 12px 0; border-bottom: 1px solid #eef2ee; }
+.anggaran-item:last-child { border-bottom: 0; }
+.anggaran-item .nama { display: flex; justify-content: space-between; font-family: system-ui, sans-serif; font-weight: 600; margin-bottom: 6px; }
+table { width: 100%; border-collapse: collapse; font-family: system-ui, sans-serif; font-size: 15px; }
+th, td { text-align: left; padding: 9px 8px; border-bottom: 1px solid #edf1ed; vertical-align: top; }
+th { font-size: 13px; text-transform: uppercase; letter-spacing: .05em; color: var(--abu); }
+td.angka, th.angka { text-align: right; white-space: nowrap; }
+td.masuk { color: var(--hijau); font-weight: 700; }
+td.keluar { color: var(--merah); }
+.tag {
+  display: inline-block; padding: 2px 9px; border-radius: 999px;
+  background: var(--hijau-muda); color: var(--hijau-tua);
+  font-size: 13px; font-weight: 600; white-space: nowrap;
+}
+.tag.lunas { background: var(--hijau-muda); color: var(--hijau); }
+.tag.belum { background: var(--emas-muda); color: #8a5a00; }
+.tag.lewat { background: var(--merah-muda); color: var(--merah); }
+form .field { margin-bottom: 12px; }
+form label, .toolbar label { display: block; font-family: system-ui, sans-serif; font-size: 14px; font-weight: 600; margin-bottom: 4px; }
+form input, form select, .toolbar input, .toolbar select {
+  width: 100%; padding: 9px 11px; border: 1px solid #c4d2c7; border-radius: 9px;
+  font-size: 16px; font-family: system-ui, sans-serif; background: #fff; color: var(--tinta);
+}
+form input:focus, form select:focus, .toolbar input:focus, .toolbar select:focus { outline: 3px solid #bcdcc9; border-color: var(--hijau); }
+.form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0 14px; }
+button {
+  font-family: system-ui, sans-serif; font-size: 15px; font-weight: 700;
+  padding: 10px 18px; border-radius: 10px; border: 1px solid var(--hijau);
+  background: var(--hijau); color: #fff; cursor: pointer;
+}
+button:hover { background: var(--hijau-tua); }
+button.ghost { background: #fff; color: var(--hijau-tua); border-color: #b9c9bd; }
+button.ghost:hover { background: var(--hijau-muda); }
+button.kecil { padding: 6px 11px; font-size: 14px; border-radius: 8px; }
+button.bahaya { background: #fff; color: var(--merah); border-color: #e3b3ae; }
+button.bahaya:hover { background: var(--merah-muda); }
+.toolbar { display: flex; flex-wrap: wrap; gap: 10px; align-items: end; margin-bottom: 14px; }
+.toolbar .field { margin-bottom: 0; flex: 1 1 160px; }
+.pesan {
+  font-family: system-ui, sans-serif; font-size: 15px;
+  background: var(--hijau-muda); border: 1px solid #bcdcc9; color: var(--hijau-tua);
+  border-radius: 10px; padding: 10px 14px; margin: 0 0 16px;
+}
+.pesan:empty { display: none; }
+.daftar { list-style: none; margin: 0; padding: 0; font-family: system-ui, sans-serif; }
+.daftar li { display: flex; justify-content: space-between; gap: 12px; padding: 9px 0; border-bottom: 1px solid #eef2ee; }
+.daftar li:last-child { border-bottom: 0; }
+.daftar .angka { font-weight: 700; white-space: nowrap; }
+.tips { background: var(--emas-muda); border: 1px solid #ecd9a8; }
+.tips h2 { color: #6d4a00; }
+.tips p { font-family: system-ui, sans-serif; font-size: 15px; margin: 0 0 8px; }
+.tips p:last-child { margin-bottom: 0; }
+.grafik { width: 100%; height: auto; display: block; }
+.grafik text { font-family: system-ui, sans-serif; }
+.toggle-row { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 12px 0; border-bottom: 1px solid #eef2ee; }
+.toggle-row:last-child { border-bottom: 0; }
+.toggle-row .info { font-family: system-ui, sans-serif; }
+.toggle-row .info strong { display: block; font-size: 16px; }
+.toggle-row .info span { color: var(--abu); font-size: 14px; }
+.tabungan-head { display: flex; justify-content: space-between; align-items: baseline; gap: 10px; font-family: system-ui, sans-serif; }
+.tabungan-head strong { font-size: 17px; }
+.setoran { display: flex; gap: 8px; margin-top: 10px; }
+.setoran input { flex: 1; padding: 8px 10px; border: 1px solid #c4d2c7; border-radius: 9px; font-size: 15px; font-family: system-ui, sans-serif; }
+.site-footer { border-top: 1px solid var(--garis); padding: 22px 0 30px; color: var(--abu); font-family: system-ui, sans-serif; font-size: 14px; }
+.site-footer p { margin: 0 0 8px; max-width: 78ch; }
+.foot-note { font-size: 13px; }
+@media (max-width: 860px) {
+  .grid.kpi { grid-template-columns: 1fr 1fr; }
+  .grid.dua, .grid.tiga { grid-template-columns: 1fr; }
+  h1 { font-size: 25px; }
+  .kpi-card .nilai { font-size: 24px; }
+}
+@media (max-width: 520px) {
+  body { font-size: 16px; }
+  .main-nav a { padding: 7px 9px; font-size: 14px; }
+  .form-grid { grid-template-columns: 1fr; }
+  th:nth-child(2), td:nth-child(2) { display: none; }
+}
