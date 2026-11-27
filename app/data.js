@@ -76,12 +76,17 @@
     { id: 's3', nama: 'Renovasi dapur', target: 12000000, terkumpul: 4750000, catatan: 'Ganti kompor dan kabinet bawah.' }
   ];
 
+  // v3: sebaran bulanan dibuat benar-benar naik-turun — Juni defisit
+  // (pengeluaran melewati pemasukan), Juli surplus besar, Agustus dan
+  // Oktober ketat — supaya batang Tren bercerita, bukan enam batang yang
+  // tingginya sama. November TETAP 23.100.000 / 10.353.000: itu angka
+  // transaksi bulan ini yang dipakai Dashboard (KPI, hero) dan halaman Tren.
   var TREN_AWAL = [
-    { bulan: 'Jun', pemasukan: 21800000, pengeluaran: 9850000 },
-    { bulan: 'Jul', pemasukan: 22400000, pengeluaran: 10120000 },
-    { bulan: 'Agu', pemasukan: 22100000, pengeluaran: 9640000 },
-    { bulan: 'Sep', pemasukan: 22900000, pengeluaran: 10480000 },
-    { bulan: 'Okt', pemasukan: 23000000, pengeluaran: 10210000 },
+    { bulan: 'Jun', pemasukan: 19400000, pengeluaran: 21150000 },
+    { bulan: 'Jul', pemasukan: 22800000, pengeluaran: 9420000 },
+    { bulan: 'Agu', pemasukan: 20600000, pengeluaran: 12900000 },
+    { bulan: 'Sep', pemasukan: 24300000, pengeluaran: 10050000 },
+    { bulan: 'Okt', pemasukan: 21200000, pengeluaran: 14600000 },
     { bulan: 'Nov', pemasukan: 23100000, pengeluaran: 10353000 }
   ];
 

@@ -194,7 +194,7 @@
     tren.forEach(function (b) {
       h.push('<tr><td>' + esc(b.bulan) + ' 2026</td><td class="angka">' + D.formatRp(b.pemasukan) + '</td><td class="angka">' + D.formatRp(b.pengeluaran) + '</td><td class="angka">' + D.formatRp(b.pemasukan - b.pengeluaran) + '</td></tr>');
     });
-    h.push('</tbody></table><p style="font-family:system-ui,sans-serif;font-size:15px;margin:14px 0 0">Rata-rata sisa per bulan: <strong>' + D.formatRp(tren.reduce(function (a, b) { return a + b.pemasukan - b.pengeluaran; }, 0) / tren.length) + '</strong>. Pengeluaran paling rendah Agustus (' + D.formatRp(9640000) + '), paling tinggi September (' + D.formatRp(10480000) + ').</p></div>');
+    h.push('</tbody></table><p style="font-family:system-ui,sans-serif;font-size:15px;margin:14px 0 0">Rata-rata sisa per bulan: <strong>' + D.formatRp(tren.reduce(function (a, b) { return a + b.pemasukan - b.pengeluaran; }, 0) / tren.length) + '</strong>. Pengeluaran paling rendah Juli (' + D.formatRp(9420000) + '), paling tinggi Juni (' + D.formatRp(21150000) + ').</p></div>');
     return h.join('');
   }
 

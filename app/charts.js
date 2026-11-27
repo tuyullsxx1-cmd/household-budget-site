@@ -2,9 +2,14 @@
 (function () {
   'use strict';
 
+  // v3: nol dibaca 'Rp0' (bukan 'Rp0 rb' yang ceroboh), dan nilai negatif
+  // memakai cabang yang benar ('−Rp1,8 jt', bukan 'Rp-1750 rb').
   function singkat(nilai) {
-    if (nilai >= 1000000) return 'Rp' + (nilai / 1000000).toFixed(1).replace('.', ',') + ' jt';
-    return 'Rp' + Math.round(nilai / 1000) + ' rb';
+    if (nilai === 0) return 'Rp0';
+    var tanda = nilai < 0 ? '−' : '';
+    var abs = Math.abs(nilai);
+    if (abs >= 1000000) return tanda + 'Rp' + (abs / 1000000).toFixed(1).replace('.', ',') + ' jt';
+    return tanda + 'Rp' + Math.round(abs / 1000) + ' rb';
   }
 
   function esc(teks) {
@@ -82,8 +87,12 @@
       var t = sisa * skala;
       var x = i * lebarGrup + 6;
       var w = lebarGrup - 12;
-      var isi = (i === tren.length - 1) ? '#e8b64c' : '#5fae87';
-      s.push('<rect x="' + x.toFixed(1) + '" y="' + (alas - t).toFixed(1) + '" width="' + w.toFixed(1) + '" height="' + t.toFixed(1) + '" rx="3" fill="' + isi + '"><title>' + esc(b.bulan) + ' sisa ' + singkat(sisa) + '</title></rect>');
+      // v3: sisa negatif (bulan defisit) digambar ke BAWAH dari garis alas
+      // dengan warna merah, bukan hilang — batang negatif itu cerita.
+      var isi = sisa < 0 ? '#b3382e' : ((i === tren.length - 1) ? '#e8b64c' : '#5fae87');
+      var y = t >= 0 ? alas - t : alas;
+      var tinggi = Math.abs(t);
+      s.push('<rect x="' + x.toFixed(1) + '" y="' + y.toFixed(1) + '" width="' + w.toFixed(1) + '" height="' + tinggi.toFixed(1) + '" rx="3" fill="' + isi + '"><title>' + esc(b.bulan) + ' sisa ' + singkat(sisa) + '</title></rect>');
       s.push('<text x="' + (x + w / 2).toFixed(1) + '" y="' + (tinggi - 2) + '" text-anchor="middle" font-size="10" fill="#cfe3d8">' + esc(b.bulan) + '</text>');
     });
     s.push('</svg>');
